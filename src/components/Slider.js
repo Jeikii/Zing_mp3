@@ -1,28 +1,38 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { getArrSlider } from '../ultis/function'
 
 const Slider = () => {
   const { banner } = useSelector((state) => state.app)
 
   useEffect(() => {
-    const sliderElments = document.getElementsByClassName('slider-item')
-    // let min = 0
-    // let max = 2
-    // const intervalId = setInterval(() => {
-    //   for (let i = 0; i < sliderElments.length; i++) {
-    //     if (i <= max && i >= min) {
-    //       sliderElments[i].style.cssText = `display: none`
-    //     } else {
-    //       sliderElments[i].style.cssText = `display: block`
-    //     }
-    //   }
-    //   min += 1
-    //   max += 1
-    //   console.log({ min, max })
-    // }, 1000)
-    // return () => {
-    //   intervalId && clearInterval(intervalId)
-    // }
+    const sliderElements = document.getElementsByClassName('slider-item')
+    let min = 0
+    let max = 2
+    const intervalId = setInterval(() => {
+      const list = getArrSlider(min, max, sliderElements.length - 1)
+      for (let i = 0; i < sliderElements.length; i++) {
+        if (list.some((item) => item === i)) {
+          sliderElements[i].style.cssText = `display: none`
+        } else {
+          sliderElements[i].style.cssText = `display: block`
+        }
+      }
+      if (min === sliderElements.length - 1) {
+        min = 0
+      } else {
+        min += 1
+      }
+      if (max === sliderElements.length - 1) {
+        max = 0
+      } else {
+        max += 1
+      }
+      console.log(list)
+    }, 1000)
+    return () => {
+      intervalId && clearInterval(intervalId)
+    }
   }, [])
 
   return (
