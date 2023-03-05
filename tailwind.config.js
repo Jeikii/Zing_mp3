@@ -57,6 +57,9 @@ module.exports = {
         'slide-left-2': 'slide-left-2 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
       },
     },
+    screens: {
+      1200: '1200px',
+    },
   },
   plugins: [],
 }
