@@ -15,7 +15,7 @@ import {
 } from 'react-icons/bs'
 import { TbChartArcs } from 'react-icons/tb'
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
-import { CiRepeat, CiShuffle } from 'react-icons/ci'
+import { CiRepeat, CiShuffle, CiMusicNote1 } from 'react-icons/ci'
 
 const icons = {
   MdOutlineLibraryMusic,
@@ -34,6 +34,7 @@ const icons = {
   CiShuffle,
   BsFillPlayFill,
   BsPauseFill,
+  CiMusicNote1,
 }
 
 export default icons

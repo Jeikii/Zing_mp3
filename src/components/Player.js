@@ -16,9 +16,7 @@ const {
 } = icons
 
 const Player = () => {
-  const audioEle = new Audio(
-    'https://mp3-s1-zmp3.zmdcdn.me/9c810696b4d65d8804c7/5049891472010456666?authen=exp=1678195683~acl=/9c810696b4d65d8804c7/*~hmac=043716f8bfa23961ef2477d7607d8b25&fs=MTY3ODAyMjg4MzkwN3x3ZWJWNnwwfDEyMy4yMS45Ny4xNzg'
-  )
+  const audioEle = new Audio()
   const { curSongId, playingMusic } = useSelector((state) => state.music)
   const [songInfo, setSongInfo] = useState(null)
   const [source, setSource] = useState(null)
@@ -28,8 +26,8 @@ const Player = () => {
   useEffect(() => {
     const fetchDetailSong = async () => {
       const [res1, res2] = await Promise.all([
-        apis.getDetailSong(curSongId),
-        apis.getSong(curSongId),
+        apis.apiGetDetailSong(curSongId),
+        apis.apiGetSong(curSongId),
       ])
       if (res1.data.err === 0) {
         setSongInfo(res1.data.data)
@@ -43,7 +41,7 @@ const Player = () => {
   }, [curSongId])
 
   useEffect(() => {
-    audioEle.play()
+    // audioEle.play()
   }, [curSongId])
 
   const handleTogglePlayMusic = () => {
