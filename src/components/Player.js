@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import * as apis from '../apis'
 import icons from '../ultis/icons'
+import { useDispatch } from 'react-redux'
+import * as actions from '../store/actions'
 
 const {
   AiFillHeart,
@@ -16,12 +18,11 @@ const {
 } = icons
 
 const Player = () => {
-  const audioEle = new Audio()
-  const { curSongId, playingMusic } = useSelector((state) => state.music)
+  const audioEle = useRef(new Audio())
+  const { curSongId, isPlaying } = useSelector((state) => state.music)
   const [songInfo, setSongInfo] = useState(null)
   const [source, setSource] = useState(null)
-  const [isPlaying, setIsPlaying] = useState(false)
-  console.log(audioEle)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const fetchDetailSong = async () => {
@@ -39,13 +40,23 @@ const Player = () => {
 
     fetchDetailSong()
   }, [curSongId])
+  console.log(source)
 
   useEffect(() => {
-    // audioEle.play()
-  }, [curSongId])
+    audioEle.current.pause()
+    audioEle.current.src = source
+    audioEle.current.load()
+    if (isPlaying) audioEle.current.play()
+  }, [curSongId, source])
 
   const handleTogglePlayMusic = () => {
-    setIsPlaying((prev) => !prev)
+    if (isPlaying) {
+      audioEle.current.pause()
+      dispatch(actions.play(false))
+    } else {
+      audioEle.current.play()
+      dispatch(actions.play(true))
+    }
   }
 
   return (

@@ -12,6 +12,7 @@ import {
   BsThreeDots,
   BsFillPlayFill,
   BsPauseFill,
+  BsDot,
 } from 'react-icons/bs'
 import { TbChartArcs } from 'react-icons/tb'
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
@@ -35,6 +36,7 @@ const icons = {
   BsFillPlayFill,
   BsPauseFill,
   CiMusicNote1,
+  BsDot,
 }
 
 export default icons
