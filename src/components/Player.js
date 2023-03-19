@@ -4,6 +4,8 @@ import * as apis from '../apis'
 import icons from '../ultis/icons'
 import { useDispatch } from 'react-redux'
 import * as actions from '../store/actions'
+import moment from 'moment'
+import { toast } from 'react-toastify'
 
 const {
   AiFillHeart,
@@ -15,14 +17,21 @@ const {
   CiShuffle,
   BsFillPlayFill,
   BsPauseFill,
+  TbRepeatOnce,
 } = icons
 
+var intervalId
+
 const Player = () => {
-  const audioEle = useRef(new Audio())
-  const { curSongId, isPlaying } = useSelector((state) => state.music)
+  const { curSongId, isPlaying, songs } = useSelector((state) => state.music)
   const [songInfo, setSongInfo] = useState(null)
-  const [source, setSource] = useState(null)
+  const [audio, setAudio] = useState(new Audio())
+  const [curSeconds, setCurSeconds] = useState(0)
+  const [isShuffle, setIsShuffle] = useState(false)
+  const [repeatMode, setRepeatMode] = useState(0)
   const dispatch = useDispatch()
+  const thumbRef = useRef()
+  const trackRef = useRef()
 
   useEffect(() => {
     const fetchDetailSong = async () => {
@@ -34,29 +43,100 @@ const Player = () => {
         setSongInfo(res1.data.data)
       }
       if (res2.data.err === 0) {
-        setSource(res2.data.data['128'])
+        audio.pause()
+        setAudio(new Audio(res2.data.data['128']))
+      } else {
+        audio.pause()
+        setAudio(new Audio())
+        dispatch(actions.play(false))
+        toast.warn(res2.data.msg)
+        setCurSeconds(0)
+        thumbRef.current.style.cssText = `right: 100%`
       }
     }
-
     fetchDetailSong()
   }, [curSongId])
-  console.log(source)
 
   useEffect(() => {
-    audioEle.current.pause()
-    audioEle.current.src = source
-    audioEle.current.load()
-    if (isPlaying) audioEle.current.play()
-  }, [curSongId, source])
+    intervalId && clearInterval(intervalId)
+    audio.pause()
+    audio.load()
+    if (isPlaying && thumbRef.current) {
+      audio.play()
+      intervalId = setInterval(() => {
+        let percent = Math.round((audio.currentTime * 10000) / songInfo.duration) / 100
+        thumbRef.current.style.cssText = `right: ${100 - percent}%`
+        setCurSeconds(Math.round(audio.currentTime))
+      }, 10)
+    }
+  }, [audio])
+
+  useEffect(() => {
+    const handleEnded = () => {
+      if (isShuffle) {
+        handleShuffle()
+      } else if (repeatMode) {
+        repeatMode === 1 ? handleRepeatOne() : handleNextSong()
+      } else {
+        audio.pause()
+        dispatch(actions.play(false))
+      }
+    }
+    audio.addEventListener('ended', handleEnded)
+    return () => {
+      audio.removeEventListener('ended', handleEnded)
+    }
+  }, [audio, isShuffle, repeatMode])
 
   const handleTogglePlayMusic = () => {
     if (isPlaying) {
-      audioEle.current.pause()
+      audio.pause()
       dispatch(actions.play(false))
     } else {
-      audioEle.current.play()
+      audio.play()
       dispatch(actions.play(true))
     }
+  }
+
+  const handleClickProgressBar = (e) => {
+    const trackRect = trackRef.current.getBoundingClientRect()
+    const percent =
+      Math.round(((e.clientX - trackRect.left) * 10000) / trackRect.width) / 100
+    thumbRef.current.style.cssText = `right: ${100 - percent}%`
+    audio.currentTime = (percent * songInfo.duration) / 100
+    setCurSeconds(Math.round((percent * songInfo.duration) / 100))
+  }
+
+  const handleNextSong = () => {
+    if (songs) {
+      let currentSongIndex
+      songs?.forEach((item, index) => {
+        if (item.encodeId === curSongId) currentSongIndex = index
+      })
+      dispatch(actions.setCurSongId(songs[currentSongIndex + 1].encodeId))
+      dispatch(actions.play(true))
+    }
+  }
+
+  const handlePrevSong = () => {
+    if (songs) {
+      let currentSongIndex
+      songs?.forEach((item, index) => {
+        if (item.encodeId === curSongId) currentSongIndex = index
+      })
+      dispatch(actions.setCurSongId(songs[currentSongIndex - 1].encodeId))
+      dispatch(actions.play(true))
+    }
+  }
+
+  const handleShuffle = () => {
+    const randomIndex = Math.round(Math.random() * songs?.length) - 1
+    dispatch(actions.setCurSongId(songs[randomIndex].encodeId))
+    dispatch(actions.play(true))
+  }
+
+  const handleRepeatOne = () => {
+    audio.play()
   }
 
   return (
@@ -82,10 +162,17 @@ const Player = () => {
       </div>
       <div className='w-[40%] flex-auto border flex items-center justify-center flex-col gap-2 border-red-600 py-2'>
         <div className='flex gap-8 justify-center items-center'>
-          <span className='cursor-pointer' title='Bật phát ngẫu nhiên'>
+          <span
+            className={`cursor-pointer ${isShuffle && 'text-purple-600'}`}
+            title='Bật phát ngẫu nhiên'
+            onClick={() => setIsShuffle((prev) => !prev)}
+          >
             <CiShuffle size={24} />
           </span>
-          <span className='cursor-pointer'>
+          <span
+            onClick={handlePrevSong}
+            className={`${!songs ? 'text-gray-500' : 'cursor-pointer'}`}
+          >
             <MdSkipPrevious size={24} />
           </span>
           <span
@@ -94,14 +181,34 @@ const Player = () => {
           >
             {isPlaying ? <BsPauseFill size={30} /> : <BsFillPlayFill size={30} />}
           </span>
-          <span className='cursor-pointer'>
+          <span
+            onClick={handleNextSong}
+            className={`${!songs ? 'text-gray-500' : 'cursor-pointer'}`}
+          >
             <MdSkipNext size={24} />
           </span>
-          <span className='cursor-pointer' title='Bật phát lại tất cả'>
-            <CiRepeat size={24} />
+          <span
+            className={`cursor-pointer ${repeatMode && 'text-purple-600'}`}
+            title='Bật phát lại tất cả'
+            onClick={() => setRepeatMode((prev) => (prev === 2 ? 0 : prev + 1))}
+          >
+            {repeatMode === 1 ? <TbRepeatOnce size={24} /> : <CiRepeat size={24} />}
           </span>
         </div>
-        <div className=''>Progress bar</div>
+        <div className='w-full flex items-center justify-center gap-3 text-xs'>
+          <span>{moment.utc(curSeconds * 1000).format('mm:ss')}</span>
+          <div
+            className='w-3/4 h-[3px] hover:h-[8px] rounded-l-full rounded-r-full cursor-pointer relative bg-[rgba(0,0,0,0.1)]'
+            onClick={handleClickProgressBar}
+            ref={trackRef}
+          >
+            <div
+              ref={thumbRef}
+              className='absolute top-0 left-0 bottom-0 rounded-l-full rounded-r-full bg-[#0e8080]'
+            ></div>
+          </div>
+          <span>{moment.utc(songInfo?.duration * 1000).format('mm:ss')}</span>
+        </div>
       </div>
       <div className='w-[30%] flex-auto border border-red-600'>Volume</div>
     </div>

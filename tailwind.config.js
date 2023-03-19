@@ -9,6 +9,7 @@ module.exports = {
         'main-300': '#ced9d9',
         'main-400': '#c0d8d8',
         'main-500': '#0e8080',
+        'overlay-30': 'rgba(0,0,0,.3)',
       },
       colors: {
         'main-100': '#e7ecec',
@@ -40,14 +41,25 @@ module.exports = {
             transform: 'translateX(0);',
           },
         },
-        'slide-left-2': {
+        'rotate-center': {
           '0%': {
-            '-webkit-transform': 'translateX(500px);',
-            transform: 'translateX(500px);',
+            '-webkit-transform': 'rotate(0);',
+            transform: 'rotate(0);',
           },
           '100%': {
-            '-webkit-transform': 'translateX(0);',
-            transform: 'translateX(0);',
+            '-webkit-transform': 'rotate(360deg);',
+            transform: 'rotate(360deg);',
+          },
+        },
+        'rotate-center-pause': {
+          '0%': {
+            '-webkit-transform': 'rotate(360deg);',
+            transform: 'rotate(360deg);',
+            'border-radius': '99999px',
+          },
+          '100%': {
+            '-webkit-transform': 'rotate(0);',
+            transform: 'rotate(0);',
           },
         },
       },
@@ -55,6 +67,8 @@ module.exports = {
         'slide-right': 'slide-right 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
         'slide-left': 'slide-left 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
         'slide-left-2': 'slide-left-2 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
+        'rotate-center': 'rotate-center 8s linear infinite;',
+        'rotate-center-pause': 'rotate-center-pause .3s linear 2 both;',
       },
       flex: {
         4: '4 4 0%',
