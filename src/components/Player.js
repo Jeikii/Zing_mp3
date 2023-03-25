@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import * as actions from '../store/actions'
 import moment from 'moment'
 import { toast } from 'react-toastify'
+import { LoadingSong } from './'
 
 const {
   AiFillHeart,
@@ -18,27 +19,35 @@ const {
   BsFillPlayFill,
   BsPauseFill,
   TbRepeatOnce,
+  RiPlayListFill,
+  FiVolumeX,
+  FiVolume1,
+  FiVolume2,
 } = icons
 
 var intervalId
 
-const Player = () => {
+const Player = ({ setIsShowRightSidebar }) => {
   const { curSongId, isPlaying, songs } = useSelector((state) => state.music)
   const [songInfo, setSongInfo] = useState(null)
   const [audio, setAudio] = useState(new Audio())
   const [curSeconds, setCurSeconds] = useState(0)
   const [isShuffle, setIsShuffle] = useState(false)
   const [repeatMode, setRepeatMode] = useState(0)
+  const [isLoadedSource, setIsLoadedSource] = useState(true)
+  const [volume, setVolume] = useState(100)
   const dispatch = useDispatch()
   const thumbRef = useRef()
   const trackRef = useRef()
 
   useEffect(() => {
     const fetchDetailSong = async () => {
+      setIsLoadedSource(false)
       const [res1, res2] = await Promise.all([
         apis.apiGetDetailSong(curSongId),
         apis.apiGetSong(curSongId),
       ])
+      setIsLoadedSource(true)
       if (res1.data.err === 0) {
         setSongInfo(res1.data.data)
       }
@@ -87,6 +96,10 @@ const Player = () => {
       audio.removeEventListener('ended', handleEnded)
     }
   }, [audio, isShuffle, repeatMode])
+
+  useEffect(() => {
+    audio.volume = volume / 100
+  }, [volume])
 
   const handleTogglePlayMusic = () => {
     if (isPlaying) {
@@ -160,7 +173,7 @@ const Player = () => {
           </span>
         </div>
       </div>
-      <div className='w-[40%] flex-auto border flex items-center justify-center flex-col gap-2 border-red-600 py-2'>
+      <div className='w-[40%] flex-auto flex items-center justify-center flex-col gap-2 py-2'>
         <div className='flex gap-8 justify-center items-center'>
           <span
             className={`cursor-pointer ${isShuffle && 'text-purple-600'}`}
@@ -179,7 +192,13 @@ const Player = () => {
             className='p-1 border border-gray-700 hover:text-main-500 cursor-pointer rounded-full'
             onClick={handleTogglePlayMusic}
           >
-            {isPlaying ? <BsPauseFill size={30} /> : <BsFillPlayFill size={30} />}
+            {!isLoadedSource ? (
+              <LoadingSong />
+            ) : isPlaying ? (
+              <BsPauseFill size={30} />
+            ) : (
+              <BsFillPlayFill size={30} />
+            )}
           </span>
           <span
             onClick={handleNextSong}
@@ -210,7 +229,27 @@ const Player = () => {
           <span>{moment.utc(songInfo?.duration * 1000).format('mm:ss')}</span>
         </div>
       </div>
-      <div className='w-[30%] flex-auto border border-red-600'>Volume</div>
+      <div className='w-[30%] flex-auto flex items-center justify-end gap-4'>
+        <div className='flex gap-2 items-center cursor-pointer'>
+          <span onClick={() => setVolume((prev) => (prev === 0 ? 70 : 0))}>
+            {volume >= 50 ? <FiVolume2 /> : volume === 0 ? <FiVolumeX /> : <FiVolume1 />}
+          </span>
+          <input
+            type='range'
+            step={1}
+            min={0}
+            max={100}
+            value={volume}
+            onChange={(e) => setVolume(e.target.value)}
+          />
+        </div>
+        <span
+          className='p-1 rounded-sm cursor-pointer bg-main-500 opacity-90 hover:opacity-100'
+          onClick={() => setIsShowRightSidebar((prev) => !prev)}
+        >
+          <RiPlayListFill size={20} />
+        </span>
+      </div>
     </div>
   )
 }
