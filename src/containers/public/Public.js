@@ -29,11 +29,11 @@ const Public = () => {
           </div>
         </div>
         {isShowRightSidebar ? (
-          <div className='w-[329px] hidden 1200:flex flex-none fixed right-0  border border-green-500 animate-slide-left'>
+          <div className='w-[329px] h-full hidden 1200:flex flex-none fixed right-0 border border-green-500 z-50 animate-slide-left'>
             <SidebarRight />
           </div>
         ) : (
-          <div className='w-[329px] hidden 1200:flex fixed right-[-329px]  border border-green-500 animate-slide-right'>
+          <div className='w-[329px] h-full hidden 1200:flex fixed right-[-329px] border border-green-500 z-50 animate-slide-right-2'>
             <SidebarRight />
           </div>
         )}

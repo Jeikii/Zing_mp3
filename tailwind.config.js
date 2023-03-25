@@ -31,6 +31,16 @@ module.exports = {
             transform: 'translateX(0);',
           },
         },
+        'slide-right-2': {
+          '0%': {
+            '-webkit-transform': 'translateX(-329px);',
+            transform: 'translateX(-329px);',
+          },
+          '100%': {
+            '-webkit-transform': 'translateX(0);',
+            transform: 'translateX(0);',
+          },
+        },
         'slide-left': {
           '0%': {
             '-webkit-transform': 'translateX(500px);',
@@ -85,6 +95,8 @@ module.exports = {
       },
       animation: {
         'slide-right': 'slide-right 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
+        'slide-right-2':
+          'slide-right-2 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
         'slide-left': 'slide-left 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
         'slide-left-2': 'slide-left-2 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
         'rotate-center': 'rotate-center 8s linear infinite;',
