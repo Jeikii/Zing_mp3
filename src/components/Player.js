@@ -244,7 +244,7 @@ const Player = ({ setIsShowRightSidebar }) => {
           />
         </div>
         <span
-          className='p-1 rounded-sm cursor-pointer bg-main-500 opacity-90 hover:opacity-100'
+          className='p-1 rounded-sm cursor-pointer bg-overlay-30 opacity-100 hover:opacity-80'
           onClick={() => setIsShowRightSidebar((prev) => !prev)}
         >
           <RiPlayListFill size={20} />

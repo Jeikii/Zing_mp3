@@ -6,6 +6,7 @@ const initState = {
   top100: {},
   lastWeek: {},
   isLoading: false,
+  newRelease: {},
 }
 
 const appReducer = (state = initState, action) => {
@@ -19,6 +20,8 @@ const appReducer = (state = initState, action) => {
         top100: action.homeData?.find((item) => item.sectionId === 'h100') || {},
         lastWeek:
           action.homeData?.find((item) => item.sectionId === 'hEditorTheme2') || {},
+        newRelease:
+          action.homeData?.find((item) => item.sectionType === 'new-release') || {},
       }
     case actionTypes.LOADING:
       return {
