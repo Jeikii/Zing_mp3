@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Slider, Section, NewRelease } from '../../components'
+import { Slider, Section, NewRelease, ChartSection } from '../../components'
 
 const Home = () => {
   const { today, top100, lastWeek, weekChart } = useSelector((state) => state.app)
@@ -11,6 +11,7 @@ const Home = () => {
       <NewRelease />
       <Section data={today} />
       <Section data={top100} />
+      <ChartSection />
       <Section data={lastWeek} />
       <div className='flex items-center px-[43px] w-full mt-12'>
         {weekChart?.map((item) => (
