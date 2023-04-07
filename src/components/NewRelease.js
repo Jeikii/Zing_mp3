@@ -15,15 +15,15 @@ const NewRelease = () => {
   return (
     <div className='mt-12 px-[59px] flex flex-col gap-5'>
       <div className='flex items-center justify-between'>
-        <h3 className='text-[20px] font-bold'>{newRelease?.title}</h3>
-        <span className='text-xs'>TẤT CẢ</span>
+        <h3 className='text-[20px] font-bold text-[#ffff]'>{newRelease?.title}</h3>
+        <span className='text-xs text-[#ffff]'>TẤT CẢ</span>
       </div>
       <div className='flex items-center gap-5 text-xs'>
         <button
           type='button'
           onClick={() => setIsActived(0)}
-          className={`py-1 px-4 rounded-l-full rounded-r-full border border-gray-400 bg-transparent ${
-            isActived === 0 && 'bg-[#0f7f7f] text-white'
+          className={`py-1 px-4 rounded-l-full rounded-r-full text-[#ffff] font-semibold border border-gray-700 bg-transparent ${
+            isActived === 0 && 'bg-main-500 text-[#ffff]'
           }`}
         >
           TẤT CẢ
@@ -31,8 +31,8 @@ const NewRelease = () => {
         <button
           type='button'
           onClick={() => setIsActived(1)}
-          className={`py-1 px-4 rounded-l-full rounded-r-full border border-gray-400 bg-transparent ${
-            isActived === 1 && 'bg-[#0f7f7f] text-white'
+          className={`py-1 px-4 rounded-l-full rounded-r-full text-[#ffff] font-semibold border border-gray-700 bg-transparent ${
+            isActived === 1 && 'bg-main-500 text-[#ffff]'
           }`}
         >
           VIỆT NAM
@@ -40,8 +40,8 @@ const NewRelease = () => {
         <button
           type='button'
           onClick={() => setIsActived(2)}
-          className={`py-1 px-4 rounded-l-full rounded-r-full border border-gray-400 bg-transparent ${
-            isActived === 2 && 'bg-[#0f7f7f] text-white'
+          className={`py-1 px-4 rounded-l-full rounded-r-full text-[#ffff] font-semibold border border-gray-700 bg-transparent ${
+            isActived === 2 && 'bg-main-500 text-[#ffff]'
           }`}
         >
           QUỐC TẾ

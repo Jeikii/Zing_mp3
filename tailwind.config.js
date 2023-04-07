@@ -4,19 +4,19 @@ module.exports = {
   theme: {
     extend: {
       backgroundColor: {
-        'main-100': '#e7ecec',
-        'main-200': '#dde4e4',
-        'main-300': '#ced9d9',
-        'main-400': '#c0d8d8',
-        'main-500': '#0e8080',
+        'main-100': '#3A3344',
+        'main-200': '#231B2E',
+        'main-300': '#170F23',
+        'main-400': '#130c1c',
+        'main-500': '#9B4DE0',
         'overlay-30': 'rgba(0,0,0,.3)',
       },
       colors: {
-        'main-100': '#e7ecec',
-        'main-200': '#dde4e4',
-        'main-300': '#ced9d9',
-        'main-400': '#c0d8d8',
-        'main-500': '#0e8080',
+        'main-100': '#3A3344',
+        'main-200': '#231B2E',
+        'main-300': '#170F23',
+        'main-400': '#130c1c',
+        'main-500': '#9B4DE0',
       },
       keyframes: {
         'slide-right': {

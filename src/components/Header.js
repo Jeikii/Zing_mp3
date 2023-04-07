@@ -20,7 +20,7 @@ const Header = () => {
           <Search />
         </div>
       </div>
-      <div>Login</div>
+      <div className='text-white'>Login</div>
     </div>
   )
 }

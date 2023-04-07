@@ -161,10 +161,10 @@ const Player = ({ setIsShowRightSidebar }) => {
           className='w-16 h-16 object-cover rounded-md'
         />
         <div className='flex flex-col'>
-          <span className='font-semibold text-gray-700 text-sm'>{songInfo?.title}</span>
+          <span className='font-semibold text-[#fff] text-sm'>{songInfo?.title}</span>
           <span className='text-xs text-gray-500'>{songInfo?.artistsNames}</span>
         </div>
-        <div className='flex gap-4 pl-2'>
+        <div className='flex gap-4 pl-2 text-[#Fff]'>
           <span>
             <AiOutlineHeart size={16} />
           </span>
@@ -174,7 +174,7 @@ const Player = ({ setIsShowRightSidebar }) => {
         </div>
       </div>
       <div className='w-[40%] flex-auto flex items-center justify-center flex-col gap-2 py-2'>
-        <div className='flex gap-8 justify-center items-center'>
+        <div className='flex gap-8 justify-center items-center text-[#fff]'>
           <span
             className={`cursor-pointer ${isShuffle && 'text-purple-600'}`}
             title='Bật phát ngẫu nhiên'
@@ -184,12 +184,12 @@ const Player = ({ setIsShowRightSidebar }) => {
           </span>
           <span
             onClick={handlePrevSong}
-            className={`${!songs ? 'text-gray-500' : 'cursor-pointer'}`}
+            className={`${!songs ? 'text-gray-300' : 'cursor-pointer'}`}
           >
             <MdSkipPrevious size={24} />
           </span>
           <span
-            className='p-1 border border-gray-700 hover:text-main-500 cursor-pointer rounded-full'
+            className='p-1 border border-gray-300 hover:text-main-500 cursor-pointer rounded-full'
             onClick={handleTogglePlayMusic}
           >
             {!isLoadedSource ? (
@@ -202,7 +202,7 @@ const Player = ({ setIsShowRightSidebar }) => {
           </span>
           <span
             onClick={handleNextSong}
-            className={`${!songs ? 'text-gray-500' : 'cursor-pointer'}`}
+            className={`${!songs ? 'text-gray-300' : 'cursor-pointer'}`}
           >
             <MdSkipNext size={24} />
           </span>
@@ -214,16 +214,16 @@ const Player = ({ setIsShowRightSidebar }) => {
             {repeatMode === 1 ? <TbRepeatOnce size={24} /> : <CiRepeat size={24} />}
           </span>
         </div>
-        <div className='w-full flex items-center justify-center gap-3 text-xs'>
+        <div className='w-full flex items-center justify-center gap-3 text-xs text-[#ffff]'>
           <span>{moment.utc(curSeconds * 1000).format('mm:ss')}</span>
           <div
-            className='w-3/4 h-[3px] hover:h-[8px] rounded-l-full rounded-r-full cursor-pointer relative bg-[rgba(0,0,0,0.1)]'
+            className='w-3/4 h-[3px] hover:h-[8px] rounded-l-full rounded-r-full cursor-pointer relative bg-[#595460]'
             onClick={handleClickProgressBar}
             ref={trackRef}
           >
             <div
               ref={thumbRef}
-              className='absolute top-0 left-0 bottom-0 rounded-l-full rounded-r-full bg-[#0e8080]'
+              className='absolute top-0 left-0 bottom-0 rounded-l-full rounded-r-full bg-[#ffff]'
             ></div>
           </div>
           <span>{moment.utc(songInfo?.duration * 1000).format('mm:ss')}</span>

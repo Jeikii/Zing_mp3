@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom'
 import path from '../ultis/path'
 
 const notActiveStyle =
-  'py-2 px-[25px] font-bold text-[#32323d] text-[13px] flex gap-[12px] items-center'
+  'py-2 px-[25px] font-bold text-[#ffff] text-[13px] flex gap-[12px] items-center'
 const activeStyle =
-  'py-2 px-[25px] font-bold text-[#0f7070] text-[13px] flex gap-[12px] items-center'
+  'py-2 px-[25px] font-bold text-[#ffff] text-[13px] flex gap-[12px] items-center bg-[#3A3344] border-l-[3px] border-[#9B4DE0]'
 
 const SidebarLeft = () => {
   const navigate = useNavigate()

@@ -66,11 +66,11 @@ const SectionItems = ({
         />
       </div>
       <span className='flex flex-col'>
-        <span className='font-semibold '>{title}</span>
+        <span className='font-bold text-[#ffff]'>{title}</span>
         {data?.sectionId === 'h100' ? (
-          <span>{artistsNames}</span>
+          <span className='text-[#817D88] font-semibold'>{artistsNames}</span>
         ) : (
-          <span>
+          <span className='text-[#817D88] font-semibold'>
             {sortDescription?.length >= 40
               ? `${sortDescription?.slice(0, 40)}...`
               : sortDescription}
