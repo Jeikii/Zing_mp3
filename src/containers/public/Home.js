@@ -12,10 +12,9 @@ const Home = () => {
       <Slider />
       <NewRelease />
       <Section data={today} />
-      <Section data={top100} />
-      <ChartSection />
       <Section data={lastWeek} />
       <Section data={favoriteArtists} />
+      <ChartSection />
       <div className='flex items-center px-[43px] w-full mt-12'>
         {weekChart?.map((item) => (
           <Link to={item?.link?.split('.')[0]} key={item.link} className='flex-1 px-4'>
@@ -27,6 +26,7 @@ const Home = () => {
           </Link>
         ))}
       </div>
+      <Section data={top100} />
       <div className='w-full h-[500px]'></div>
     </div>
   )

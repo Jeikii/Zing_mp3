@@ -12,6 +12,7 @@ const SongItems = ({
   releaseDate,
   order,
   percent,
+  style,
 }) => {
   const dispatch = useDispatch()
   return (
@@ -21,14 +22,20 @@ const SongItems = ({
         dispatch(actions.play(true))
       }}
       className={`w-full flex p-[10px] gap-[10px] justify-between items-center rounded-md cursor-pointer ${
-        order
-          ? 'text-[#ffff] bg-[hsla(0,0%,100%,0.07)] hover:bg-[#a874b8]'
-          : 'text-black hover:bg-main-200'
+        style || 'text-black hover:bg-main-200'
       }`}
     >
       <div className='flex gap-4'>
         {order && (
-          <span className={`${order === 1 ? '' : ''} text-[#ffff] text-[32px] m-auto`}>
+          <span
+            className={`${
+              order === 1
+                ? 'text-shadow-first'
+                : order === 2
+                ? 'text-shadow-second'
+                : 'text-shadow-third'
+            } text-[rgba(77,34,104,0.9)] text-[32px] m-auto`}
+          >
             {order}
           </span>
         )}
@@ -41,13 +48,13 @@ const SongItems = ({
           <span className='text-sm font-semibold text-[#ffff] leading-normal'>
             {title?.length >= 30 ? `${title?.slice(0, 30)}...` : title}
           </span>
-          <span className='text-xs text-[#6D6774] leading-normal font-semibold'>
+          <span className='text-xs text-gray-300 leading-normal font-semibold'>
             {artists}
           </span>
           {releaseDate && (
             <span
               className={`text-xs font-semibold ${
-                order ? 'opacity-50' : 'text-[#6D6774]'
+                order ? 'opacity-50' : 'text-gray-300'
               }`}
             >
               {moment(releaseDate * 1000).fromNow()}
@@ -55,7 +62,7 @@ const SongItems = ({
           )}
         </div>
       </div>
-      {percent && <span>{`${percent}%`}</span>}
+      {percent && <span className='font-bold '>{`${percent}%`}</span>}
     </div>
   )
 }
