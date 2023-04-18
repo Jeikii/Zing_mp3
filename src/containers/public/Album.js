@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useParams, useLocation } from 'react-router-dom'
 import * as apis from '../../apis'
 import moment from 'moment'
@@ -14,6 +14,8 @@ const Album = () => {
   const location = useLocation()
   const { isPlaying } = useSelector((state) => state.music)
   const { pid } = useParams()
+  const [isHover, setIsHover] = useState(false)
+  const imageRef = useRef()
   const [playlistData, setPlaylistData] = useState({})
   const dispatch = useDispatch()
   // useState
@@ -42,22 +44,35 @@ const Album = () => {
     }
   }, [pid, playlistData])
 
+  const handleHover = () => {
+    setIsHover(true)
+    imageRef.current.classList.remove('animate-scale-down-image')
+    imageRef.current.classList.add('animate-scale-up-image')
+  }
+
+  const handleLeave = () => {
+    setIsHover(true)
+    imageRef.current.classList.add('animate-scale-down-image')
+    imageRef.current.classList.remove('animate-scale-up-image')
+  }
+
   return (
     <div className='flex relative gap-8 w-full h-full px-[59px] animate-scale-up-center'>
       <div className='flex-none w-1/4 border border-red-600 flex flex-col items-center gap-2'>
-        <div className='w-full relative overflow-hidden'>
+        <div
+          onMouseEnter={handleHover}
+          onMouseLeave={handleLeave}
+          className='w-full relative overflow-hidden'
+        >
           <img
+            ref={imageRef}
             src={playlistData?.thumbnailM}
             alt='thumbnail'
-            className={`w-full obj-contain ${
-              isPlaying
-                ? 'rounded-full animate-rotate-center'
-                : 'rounded-md animate-rotate-center-pause'
-            } shadow-lg`}
+            className={`w-full obj-contain shadow-lg`}
           />
           <div
             className={`absolute top-0 left-0 bottom-0 right-0 hover:bg-overlay-30 text-white flex items-center justify-center ${
-              isPlaying && 'rounded-full'
+              isPlaying && 'hover:bg-transparent'
             }`}
           >
             <span className='p-2 border border-white rounded-full'>
