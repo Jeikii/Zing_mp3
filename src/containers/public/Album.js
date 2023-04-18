@@ -19,6 +19,7 @@ const Album = () => {
   // useState
 
   useEffect(() => {
+    dispatch(actions.setCurAlbumId(pid))
     const fetchDetailPlaylist = async () => {
       dispatch(actions.loading(true))
       const response = await apis.apiGetDetailPlaylist(pid)
@@ -65,17 +66,17 @@ const Album = () => {
           </div>
         </div>
         <div className='flex flex-col items-center gap-1'>
-          <h3 className='text-[20px] font-bold text-gray-800'>{playlistData?.title}</h3>
-          <span className='flex gap-2 items-center text-gray-500 text-xs'>
+          <h3 className='text-[22px] font-bold text-[#ffff]'>{playlistData?.title}</h3>
+          <span className='flex gap-2 items-center text-[#7F7A85] text-sm font-medium'>
             <span>Cập nhật: </span>
             <span>
               {moment.unix(playlistData?.contentLastUpdate).format('DD/MM/YYYY')}
             </span>
           </span>
-          <span className='flex gap-2 items-center text-gray-500 text-xs'>
+          <span className='flex gap-2 items-center text-[#7F7A85] text-sm font-medium'>
             {playlistData?.artistsNames}
           </span>
-          <span className='flex gap-2 items-center text-gray-500 text-xs'>{`${Math.round(
+          <span className='flex gap-2 items-center text-[#7F7A85] text-sm font-medium'>{`${Math.round(
             playlistData?.like / 1000
           )}K người yêu thích`}</span>
         </div>
@@ -83,8 +84,10 @@ const Album = () => {
       <Scrollbars style={{ width: '100%', height: '78%' }}>
         <div className='flex-auto mb-40'>
           <span className='text-sm'>
-            <span className='text-gray-600'>Lời tựa </span>
-            <span>{playlistData?.sortDescription}</span>
+            <span className='text-[#7F7A85] text-sm'>Lời tựa </span>
+            <span className='text-[#ffff] text-sm font-semibold'>
+              {playlistData?.sortDescription}
+            </span>
           </span>
           <Lists totalDuration={playlistData?.song?.totalDuration} />
         </div>

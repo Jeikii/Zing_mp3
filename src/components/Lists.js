@@ -11,8 +11,8 @@ const Lists = ({ totalDuration }) => {
   const { songs } = useSelector((state) => state.music)
 
   return (
-    <div className='w-full flex flex-col text-xs text-gray-600'>
-      <div className='flex justify-between items-center p-[10px] font-semibold'>
+    <div className='w-full flex flex-col text-xs text-[#7F7A85]'>
+      <div className='flex justify-between items-center p-[10px] font-bold'>
         <span>BÀI HÁT</span>
         <span>ALBUM</span>
         <span>THỜI GIAN</span>
@@ -23,9 +23,11 @@ const Lists = ({ totalDuration }) => {
         ))}
       </div>
       <span className='flex items-center gap-1 py-[10px] border-t border-[rgba(0,0,0,0.05)]'>
-        <span>{`${songs?.length} bài hát`}</span>
+        <span className='text-[#7F7A85] text-sm font-medium'>{`${songs?.length} bài hát`}</span>
         <BsDot size={20} />
-        <span>{moment.utc(totalDuration * 1000).format('HH:mm:ss')}</span>
+        <span className='text-[#7F7A85] text-sm font-medium'>
+          {moment.utc(totalDuration * 1000).format('HH:mm:ss')}
+        </span>
       </span>
     </div>
   )

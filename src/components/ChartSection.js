@@ -131,6 +131,7 @@ const ChartSection = () => {
               ?.filter((i, index) => index < 3)
               ?.map((item, index) => (
                 <SongItems
+                  key={item.encodeId}
                   thumbnail={item.thumbnail}
                   title={item.title}
                   artists={item.artistsNames}

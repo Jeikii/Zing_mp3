@@ -23,20 +23,21 @@ const Public = () => {
             <Header />
           </div>
           <div className='flex-auto w-full '>
-            <Scrollbars autoHide style={{ width: '100%', height: '80%' }}>
+            <Scrollbars autoHide style={{ width: '100%', height: '100%' }}>
               <Outlet />
             </Scrollbars>
           </div>
         </div>
-        {isShowRightSidebar ? (
-          <div className='w-[329px] h-full hidden 1200:flex flex-none fixed right-0 border border-green-500 z-50 animate-slide-left'>
-            <SidebarRight />
-          </div>
-        ) : (
-          <div className='w-[329px] h-full hidden 1200:flex fixed right-[-329px] border border-green-500 z-50 animate-slide-right-2'>
+        {isShowRightSidebar && (
+          <div className='w-[329px] h-screen hidden 1200:flex flex-none right-0 animate-slide-left'>
             <SidebarRight />
           </div>
         )}
+        {/* nếu muốn slide thì dùng cách này, thêm toán thử 3 ngôi
+        <div className='w-[329px] h-full hidden 1200:flex fixed right-[-329px] z-50 animate-slide-right-2'>
+            <SidebarRight />
+          </div>
+        */}
       </div>
       <div className='fixed z-50 bottom-0 left-0 right-0 h-[90px]'>
         <Player setIsShowRightSidebar={setIsShowRightSidebar} />

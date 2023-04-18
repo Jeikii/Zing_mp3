@@ -50,6 +50,7 @@ const Player = ({ setIsShowRightSidebar }) => {
       setIsLoadedSource(true)
       if (res1.data.err === 0) {
         setSongInfo(res1.data.data)
+        dispatch(actions.setCurSongData(res1.data.data))
       }
       if (res2.data.err === 0) {
         audio.pause()
@@ -189,7 +190,7 @@ const Player = ({ setIsShowRightSidebar }) => {
             <MdSkipPrevious size={24} />
           </span>
           <span
-            className='p-1 border border-gray-300 hover:text-main-500 cursor-pointer rounded-full'
+            className='p-1 border border-gray-300 hover:text-main-500 hover:border-main-500 cursor-pointer rounded-full'
             onClick={handleTogglePlayMusic}
           >
             {!isLoadedSource ? (
@@ -231,8 +232,17 @@ const Player = ({ setIsShowRightSidebar }) => {
       </div>
       <div className='w-[30%] flex-auto flex items-center justify-end gap-4'>
         <div className='flex gap-2 items-center cursor-pointer'>
-          <span onClick={() => setVolume((prev) => (prev === 0 ? 70 : 0))}>
-            {volume >= 50 ? <FiVolume2 /> : volume === 0 ? <FiVolumeX /> : <FiVolume1 />}
+          <span
+            onClick={() => setVolume((prev) => (prev === 0 ? 70 : 0))}
+            className='text-[#ffff]'
+          >
+            {volume >= 50 ? (
+              <FiVolume2 size={20} />
+            ) : volume === 0 ? (
+              <FiVolumeX size={20} />
+            ) : (
+              <FiVolume1 size={20} />
+            )}
           </span>
           <input
             type='range'
@@ -244,10 +254,10 @@ const Player = ({ setIsShowRightSidebar }) => {
           />
         </div>
         <span
-          className='p-1 rounded-sm cursor-pointer bg-overlay-30 opacity-100 hover:opacity-80'
+          className='p-1 rounded-sm cursor-pointer bg-[#9B4DE0] opacity-100 hover:opacity-90'
           onClick={() => setIsShowRightSidebar((prev) => !prev)}
         >
-          <RiPlayListFill size={20} />
+          <RiPlayListFill size={18} color='white' />
         </span>
       </div>
     </div>

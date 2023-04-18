@@ -13,6 +13,7 @@ const SongItems = ({
   order,
   percent,
   style,
+  sm,
 }) => {
   const dispatch = useDispatch()
   return (
@@ -22,7 +23,7 @@ const SongItems = ({
         dispatch(actions.play(true))
       }}
       className={`w-full flex p-[10px] gap-[10px] justify-between items-center rounded-md cursor-pointer ${
-        style || 'text-black hover:bg-main-200'
+        style || 'text-black hover:bg-main-100'
       }`}
     >
       <div className='flex gap-4'>
@@ -42,7 +43,9 @@ const SongItems = ({
         <img
           src={thumbnail}
           alt='thumbnail'
-          className='w-[60px] h-[60px] object-cover rounded-md '
+          className={`${
+            sm ? 'w-[40px] h-[40px]' : 'w-[60px] h-[60px]'
+          } object-cover rounded-md`}
         />
         <div className='flex flex-col'>
           <span className='text-sm font-semibold text-[#ffff] leading-normal'>
