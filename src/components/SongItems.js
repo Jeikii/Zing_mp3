@@ -21,6 +21,7 @@ const SongItems = ({
       onClick={() => {
         dispatch(actions.setCurSongId(songId))
         dispatch(actions.play(true))
+        dispatch(actions.setRecent({ thumbnail, title, songId, artists }))
       }}
       className={`w-full flex p-[10px] gap-[10px] justify-between items-center rounded-md cursor-pointer ${
         style || 'text-black hover:bg-main-100'
